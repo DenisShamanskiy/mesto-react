@@ -1,9 +1,8 @@
-.popup__field {
-  padding: 0;
+.popup__label {
   width: 100%;
   height: 56px;
+  padding: 0;
   margin: 0 0 1px;
-  font-family: inherit;
   border: none;
   display: flex;
   flex-direction: column;

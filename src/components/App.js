@@ -5,7 +5,6 @@ import Main from "./Main.js";
 import Footer from "./Footer.js";
 import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
-//import ErrorPopup from "./ErrorPopup.js";
 
 function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
@@ -15,16 +14,13 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
 
   const [selectedCard, setSelectedCard] = React.useState({});
-  //const [error, setError] = React.useState({ errorText: "", isActive: false });
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
   }
-
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true);
   }
-
   function handleAddPlaceClick() {
     setAddPlacePopupOpen(true);
   }
@@ -38,35 +34,29 @@ function App() {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
-
     setSelectedCard({});
   }
-
-  /*function setErrorPopup(err, active) {
-    setError({ ...error, errorText: err, isActive: active });
-  }*/
 
   return (
     <div className="page">
       <Header />
       <Main
-        onEditProfile={handleEditProfileClick}
-        onAddPlace={handleAddPlaceClick}
-        onEditAvatar={handleEditAvatarClick}
-        onCardClick={handleCardClick}
-        //onError={setErrorPopup}
+        editProfile={handleEditProfileClick}
+        addPlace={handleAddPlaceClick}
+        editAvatar={handleEditAvatarClick}
+        onClickCard={handleCardClick}
       />
       <Footer />
 
       <PopupWithForm
         title="Редактировать профиль"
-        name="profile"
+        name="user"
         buttonSubmitText="Сохранить"
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
       >
-        <fieldset className="popup__set">
-          <label className="popup__field">
+        <fieldset className="popup__fieldset">
+          <label className="popup__label">
             <input
               type="text"
               name="name"
@@ -82,7 +72,7 @@ function App() {
             <input
               type="text"
               name="about"
-              placeholder="О себе"
+              placeholder="Что-то о себе"
               className="popup__input popup__input_type_about"
               required
               minLength="2"
@@ -95,16 +85,16 @@ function App() {
 
       <PopupWithForm
         title="Новое место"
-        name="card"
+        name="place"
         buttonSubmitText="Создать"
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
       >
-        <fieldset className="popup__set">
-          <label className="popup__field">
+        <fieldset className="popup__fieldset">
+          <label className="popup__label">
             <input
               type="text"
-              name="title"
+              name="place"
               placeholder="Название"
               className="popup__input popup__input_type_title"
               required
@@ -133,8 +123,8 @@ function App() {
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
       >
-        <fieldset className="popup__set">
-          <label className="popup__field">
+        <fieldset className="popup__fieldset">
+          <label className="popup__label">
             <input
               type="url"
               name="link"

@@ -1,10 +1,11 @@
-function Card({ card, onCardClick }) {
+function Card({ card, onClickCard }) {
   function handleClick() {
-    onCardClick(card);
+    onClickCard(card);
+    //console.log(card);
   }
 
   return (
-    <div className="elements__element">
+    <div className="elements__item">
       <img
         className="elements__image"
         src={`${card.link}`}
@@ -14,15 +15,15 @@ function Card({ card, onCardClick }) {
       <button
         type="button"
         aria-label="Удалить"
-        className="elements__btn-remove"
+        className="elements__button-remove"
       ></button>
-      <div className="elements__place">
-        <h2 className="elements__name text-cut">{card.name}</h2>
-        <div className="cards__likes-container">
+      <div className="elements__description">
+        <h2 className="elements__name">{card.name}</h2>
+        <div className="elements__like-container">
           <button
             type="button"
             aria-label="Нравится"
-            className="elements__like"
+            className="elements__button-like"
           ></button>
           <div className="elements__like-counter">{card.likes.length}</div>
         </div>
