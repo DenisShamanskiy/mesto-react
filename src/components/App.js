@@ -42,8 +42,8 @@ function App() {
       <Header />
       <Main
         editProfile={handleEditProfileClick}
-        addPlace={handleAddPlaceClick}
         editAvatar={handleEditAvatarClick}
+        addPlace={handleAddPlaceClick}
         onClickCard={handleCardClick}
       />
       <Footer />
