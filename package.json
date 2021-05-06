@@ -23,6 +23,12 @@
     "type": "git",
     "url": "git+https://github.com/DenisShamanskiy/mesto-react.git"
   },
+  "author": "Denis hamanskiy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DenisShamanskiy/mesto-react/issues"
+  },
+  "homepage": "https://DenisShamanskiy.github.io/mesto-react/",
   "eslintConfig": {
     "extends": [
       "react-app",
