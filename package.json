@@ -15,8 +15,20 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DenisShamanskiy/mesto-react.git"
+  },
+  "author": "Denis hamanskiy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DenisShamanskiy/mesto-react/issues"
+  },
+  "homepage": "https://DenisShamanskiy.github.io/mesto-react/",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -34,5 +46,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^3.1.0"
   }
 }
