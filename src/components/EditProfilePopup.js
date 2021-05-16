@@ -5,7 +5,7 @@ import PopupWithForm from "./PopupWithForm";
 
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoadingData }) {
   const currentUser = React.useContext(CurrentUserContext);
 
   const [name, setName] = React.useState("");
@@ -48,9 +48,13 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       title="Редактировать профиль"
       name="user"
       buttonSubmitText="Сохранить"
+      loadingButtonSubmitText="Загрузка..."
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      //isDisabled={!isValid}
+      contentLabel="Форма редактирования имени пользователя"
+      isLoadingData={isLoadingData}
     >
       <fieldset className="popup__fieldset">
         <label className="popup__label">

@@ -2,6 +2,8 @@ function PopupWithForm({
   title,
   name,
   buttonSubmitText,
+  loadingButtonSubmitText,
+  isLoadingData,
   children,
   isOpen,
   onClose,
@@ -25,7 +27,7 @@ function PopupWithForm({
         >
           {children}
           <button type="submit" className="popup__button-save">
-            {buttonSubmitText}
+            {isLoadingData ? loadingButtonSubmitText : buttonSubmitText}
           </button>
         </form>
       </div>

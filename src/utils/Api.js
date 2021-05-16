@@ -115,8 +115,8 @@ class Api {
     ).then(this._checkResponse);
   }
 
-  deleteCard(card) {
-    return fetch(`${this._urlServer}/${this._idCohort}/cards/${card._id}`, {
+  deleteCard(id) {
+    return fetch(`${this._urlServer}/${this._idCohort}/cards/${id}`, {
       method: "DELETE",
       headers: {
         authorization: this._token,
