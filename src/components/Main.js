@@ -3,41 +3,70 @@ import "../index.css";
 import api from "../utils/Api.js";
 import Card from "./Card.js";
 
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+
 function Main({ editAvatar, editProfile, addPlace, onClickCard }) {
-  const [userInfo, setUserInfo] = React.useState({
-    userName: "",
-    userAbout: "",
-    userAvatar: "",
-  });
+  const currentUser = React.useContext(CurrentUserContext);
 
   const [cards, setCards] = React.useState([]);
+  //const [cardForDelete, setCardForDelete] = React.useState({});
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    api.changeLikeCardStatus(card._id, isLiked).then(
+      (newCard) => {
+        const newCards = cards.map((currentCard) =>
+          currentCard._id === card._id ? newCard : currentCard
+        );
+        setCards(newCards);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  ///
+
+  function handleCardDelete(_id) {
+    api.deleteCard(_id).then(
+      () => {
+        //const newCards = cards.filter((elem) => elem !== currentUser._id);
+        const newCards = cards.filter(function (elem) {
+          return elem !== currentUser._id;
+        });
+        setCards(newCards);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  ///
 
   React.useEffect(() => {
-    Promise.all([api.getUser(), api.getCards()])
-      .then(([userData, cards]) => {
-        setUserInfo({
-          userName: userData.name,
-          userAbout: userData.about,
-          userAvatar: userData.avatar,
-        });
-        setCards(cards);
-      })
-      .catch((err) => {
+    api.getCards().then(
+      (data) => {
+        setCards(data);
+      },
+      (err) => {
         console.log(err);
-      });
-  }, []);
+      }
+    );
+  }, [setCards]);
 
   return (
     <main>
       <section className="profile page__container">
         <div
           className="profile__avatar"
-          style={{ backgroundImage: `url(${userInfo.userAvatar})` }}
+          style={{ backgroundImage: `url(${currentUser.avatar})` }}
           onClick={editAvatar}
         ></div>
         <div className="profile__info">
           <div className="profile__description">
-            <h1 className="profile__name">{userInfo.userName}</h1>
+            <h1 className="profile__name">{currentUser.name}</h1>
             <button
               type="button"
               aria-label="Редактировать"
@@ -45,7 +74,7 @@ function Main({ editAvatar, editProfile, addPlace, onClickCard }) {
               onClick={editProfile}
             ></button>
           </div>
-          <p className="profile__about">{userInfo.userAbout}</p>
+          <p className="profile__about">{currentUser.about}</p>
         </div>
         <button
           type="button"
@@ -59,7 +88,15 @@ function Main({ editAvatar, editProfile, addPlace, onClickCard }) {
 
       <section className="elements">
         {cards.map((card) => {
-          return <Card key={card._id} card={card} onClickCard={onClickCard} />;
+          return (
+            <Card
+              key={card._id}
+              card={card}
+              onClickCard={onClickCard}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
+            />
+          );
         })}
       </section>
     </main>

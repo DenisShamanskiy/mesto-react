@@ -14,7 +14,22 @@ class Api {
     }
   }
 
-  getUser() {
+  getInitialData() {
+    return Promise.all([this.getUserInfo(), this.getCards()]);
+  }
+
+  setUserInfo(data) {
+    return fetch(`${this._urlServer}/${this._idCohort}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: data.name,
+        about: data.about,
+      }),
+    }).then(this._checkResponse);
+  }
+
+  getUserInfo() {
     return fetch(`${this._urlServer}/${this._idCohort}/users/me`, {
       headers: {
         authorization: this._token,
@@ -58,28 +73,35 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  likeCard(card) {
-    return fetch(
-      `${this._urlServer}/${this._idCohort}/cards/likes/${card._id}`,
-      {
-        method: "PUT",
-        headers: {
-          authorization: this._token,
-        },
-      }
-    ).then(this._checkResponse);
+  ///
+
+  changeLikeCardStatus(id, isLiked) {
+    console.log(id);
+    if (isLiked) {
+      return this.dislikeCard(id);
+    } else {
+      return this.likeCard(id);
+    }
   }
 
-  dislikeCard(card) {
-    return fetch(
-      `${this._urlServer}/${this._idCohort}/cards/likes/${card._id}`,
-      {
-        method: "DELETE",
-        headers: {
-          authorization: this._token,
-        },
-      }
-    ).then(this._checkResponse);
+  ///
+
+  likeCard(id) {
+    return fetch(`${this._urlServer}/${this._idCohort}/cards/likes/${id}`, {
+      method: "PUT",
+      headers: {
+        authorization: this._token,
+      },
+    }).then(this._checkResponse);
+  }
+
+  dislikeCard(id) {
+    return fetch(`${this._urlServer}/${this._idCohort}/cards/likes/${id}`, {
+      method: "DELETE",
+      headers: {
+        authorization: this._token,
+      },
+    }).then(this._checkResponse);
   }
 
   getCountsOfLikes(card) {
@@ -102,7 +124,7 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  changeAvatar(link) {
+  /*changeAvatar(link) {
     return fetch(`${this._urlServer}/${this._idCohort}/users/me/avatar`, {
       method: "PATCH",
       headers: {
@@ -111,6 +133,19 @@ class Api {
       },
       body: JSON.stringify({
         avatar: link,
+      }),
+    }).then(this._checkResponse);
+  }*/
+
+  setUserAvatar(data) {
+    return fetch(`${this._urlServer}/${this._idCohort}/users/me/avatar`, {
+      method: "PATCH",
+      headers: {
+        authorization: this._token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        avatar: data.avatar,
       }),
     }).then(this._checkResponse);
   }
