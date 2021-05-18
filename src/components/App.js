@@ -14,94 +14,135 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
-  /// Переменные открытия/закрытия Popup
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] =
     React.useState(false);
-  ///
-  /// Card
   const [cards, setCards] = React.useState([]);
   const [selectedCard, setSelectedCard] = React.useState({});
   const [cardForDelete, setCardForDelete] = React.useState({});
-  ///
-  /// Переменные загрузки
   const [isLoadingSetUserInfo, setIsLoadingSetUserInfo] = React.useState(false);
   const [isLoadingAvatarUpdate, setIsLoadingAvatarUpdate] =
     React.useState(false);
   const [isLoadingAddPlaceSubmit, setIsLoadingAddPlaceSubmit] =
     React.useState(false);
-  /// Функция постановки "Лайк" карточке
-  function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    api.changeLikeCardStatus(card._id, isLiked).then(
-      (newCard) => {
-        const newCards = cards.map((currentCard) =>
-          currentCard._id === card._id ? newCard : currentCard
-        );
-        setCards(newCards);
-      },
-      (err) => {
+  const [isLoadingDeleteCard, setIsLoadingDeleteCard] = React.useState(false);
+
+  React.useEffect(() => {
+    api
+      .getInitialData()
+      .then(([userData, cardsData]) => {
+        setCurrentUser(userData);
+        setCards(cardsData);
+      })
+      .catch((err) => {
         console.log(err);
-      }
-    );
-  }
-  ///
-  /// Функции удаления карточки
-  function handleCardDelete(evt) {
-    evt.preventDefault();
-    api.deleteCard(cardForDelete._id).then(
-      () => {
-        const newCards = cards.filter((elem) => elem !== cardForDelete);
-        setCards(newCards);
+      });
+  }, []);
+
+  function handleUpdateUser(user) {
+    setIsLoadingSetUserInfo(true);
+    api
+      .setUserInfo(user)
+      .then((user) => {
+        setCurrentUser(user);
         closeAllPopups();
-      },
-      (err) => {
+      })
+      .catch((err) => {
         console.log(err);
-      }
-    );
+      })
+      .finally(() => {
+        setIsLoadingSetUserInfo(false);
+      });
   }
 
-  function handleCardDeleteRequest(card) {
-    setCardForDelete(card);
-    setIsDeleteCardPopupOpen(true);
+  function handleUpdateAvatar(avatar) {
+    setIsLoadingAvatarUpdate(true);
+    api
+      .setUserAvatar(avatar)
+      .then((avatar) => {
+        setCurrentUser(avatar);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoadingAvatarUpdate(false);
+      });
   }
-  ///
-  ///Функции добавления новой карточки
-  function handleAddPlaceSubmit(data) {
+
+  function handleAddCard(card) {
     setIsLoadingAddPlaceSubmit(true);
     api
-      .postCard(data)
-      .then(
-        (newCard) => {
-          setCards([newCard, ...cards]);
-          closeAllPopups();
-        },
-        (err) => {
-          console.log(err);
-        }
-      )
+      .postCard(card)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
       .finally(() => {
         setIsLoadingAddPlaceSubmit(false);
       });
   }
-  /// Функции просмотра карточки
-  function handleCardClick(card) {
-    setSelectedCard(card);
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    api
+      .changeLikeCardStatus(card._id, isLiked)
+      .then((newCard) => {
+        setCards(
+          cards.map((currentCard) =>
+            currentCard._id === card._id ? newCard : currentCard
+          )
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-  ///
-  /// Функции открытия/закрытия Popup
-  function handleEditProfileClick() {
-    setEditProfilePopupOpen(true);
+
+  function handleCardDelete(card) {
+    setIsLoadingDeleteCard(true);
+    api
+      .deleteCard(card)
+      .then(() => {
+        setCards(cards.filter((cardDelete) => cardDelete._id !== card._id));
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoadingDeleteCard(false);
+      });
   }
+
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
   }
+
+  function handleEditProfileClick() {
+    setEditProfilePopupOpen(true);
+  }
+
   function handleAddPlaceClick() {
     setAddPlacePopupOpen(true);
   }
+
+  function handleCardClick(card) {
+    setSelectedCard(card);
+  }
+
+  function confirmCardDelete(card) {
+    setCardForDelete(card);
+    setIsDeleteCardPopupOpen(true);
+  }
+
   function closeAllPopups() {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
@@ -109,56 +150,31 @@ function App() {
     setIsDeleteCardPopupOpen(false);
     setSelectedCard({});
   }
-  ///
-  /// Функция изменения имени пользователя
-  function handleUpdateUser(data) {
-    setIsLoadingSetUserInfo(true);
-    api
-      .patchUserInfo(data)
-      .then(
-        (data) => {
-          setCurrentUser(data);
-          closeAllPopups();
-        },
-        (err) => {
-          console.log(err);
-        }
-      )
-      .finally(() => {
-        setIsLoadingSetUserInfo(false);
-      });
-  }
-  ///
-  /// Функция изменения аватара пользователя
-  function handleUpdateAvatar(data) {
-    setIsLoadingAvatarUpdate(true);
-    api
-      .setUserAvatar(data)
-      .then(
-        (data) => {
-          setCurrentUser(data);
-          closeAllPopups();
-        },
-        (err) => {
-          console.log(err);
-        }
-      )
-      .finally(() => {
-        setIsLoadingAvatarUpdate(false);
-      });
-  }
-  ///
-  React.useEffect(() => {
-    api.getInitialData().then(
-      (data) => {
-        const [userData, cardsData] = data;
-        setCards(cardsData);
-        setCurrentUser(userData);
-      },
-      (err) => {
-        console.log(err);
+
+  /*React.useEffect(() => {
+    function handleOverlayClick(evt) {
+      if (evt.target.classList.contains("popup")) {
+        closeAllPopups();
       }
-    );
+    }
+    document.addEventListener("mousedown", handleOverlayClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOverlayClick);
+    };
+  }, []);*/
+
+  React.useEffect(() => {
+    function handleEscapeClick(evt) {
+      if (evt.key === "Escape") {
+        closeAllPopups();
+      }
+    }
+    document.addEventListener("keyup", handleEscapeClick);
+
+    return () => {
+      document.removeEventListener("keyup", handleEscapeClick);
+    };
   }, []);
 
   return (
@@ -166,13 +182,13 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
         <Main
+          cards={cards}
           editProfile={handleEditProfileClick}
           editAvatar={handleEditAvatarClick}
           addPlace={handleAddPlaceClick}
           onClickCard={handleCardClick}
           onCardLike={handleCardLike}
-          onCardDeleteRequest={handleCardDeleteRequest}
-          cards={cards}
+          onCardDelete={confirmCardDelete}
         />
         <Footer />
 
@@ -187,7 +203,7 @@ function App() {
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-          onAddPlace={handleAddPlaceSubmit}
+          onAddPlace={handleAddCard}
           isLoadingData={isLoadingAddPlaceSubmit}
         />
 
@@ -201,7 +217,9 @@ function App() {
         <DeleteCardPopup
           isOpen={isDeleteCardPopupOpen}
           onClose={closeAllPopups}
-          onSubmit={handleCardDelete}
+          card={cardForDelete}
+          onSubmitDelete={handleCardDelete}
+          isLoadingData={isLoadingDeleteCard}
         />
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />

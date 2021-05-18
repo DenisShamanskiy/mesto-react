@@ -1,8 +1,6 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
-//import { useFormWithValidation } from '../hooks/useFormWithValidation';
-
 function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
   const [place, setPlace] = React.useState("");
   const [link, setLink] = React.useState("");
@@ -19,17 +17,6 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
     evt.preventDefault();
     onAddPlace({ name: place, link });
   }
-  /*
-  function handleSubmit(evt) {
-    evt.preventDefault(evt);
-    props.onAddPlace(values);
-  }
-  
-
-  React.useEffect(() => {
-    resetForm();
-  }, [props.isOpen, resetForm]);
-  */
 
   return (
     <PopupWithForm
@@ -40,7 +27,6 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      //isDisabled={!isValid}
       contentLabel="Форма добавления изображения"
       isLoadingData={isLoadingData}
     >

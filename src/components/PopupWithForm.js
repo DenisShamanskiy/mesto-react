@@ -1,3 +1,5 @@
+import React from "react";
+
 function PopupWithForm({
   title,
   name,
@@ -8,6 +10,7 @@ function PopupWithForm({
   isOpen,
   onClose,
   onSubmit,
+  buttonSubmitState,
 }) {
   return (
     <div className={`popup ${isOpen ? "popup_opened" : ""}`}>
@@ -26,7 +29,13 @@ function PopupWithForm({
           noValidate
         >
           {children}
-          <button type="submit" className="popup__button-save">
+          <button
+            type="submit"
+            className={`popup__button-save ${
+              !buttonSubmitState ? "popup__button-save_inactive" : ""
+            }`}
+            disabled={!buttonSubmitState ? true : ""}
+          >
             {isLoadingData ? loadingButtonSubmitText : buttonSubmitText}
           </button>
         </form>
