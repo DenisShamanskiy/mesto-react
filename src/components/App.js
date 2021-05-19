@@ -8,7 +8,7 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import DeleteCardPopup from "./DeleteCardPopup";
 import ImagePopup from "./ImagePopup.js";
-import api from "../utils/Api.js";
+import api from "../utils/api.js";
 
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
@@ -150,19 +150,6 @@ function App() {
     setIsDeleteCardPopupOpen(false);
     setSelectedCard({});
   }
-
-  /*React.useEffect(() => {
-    function handleOverlayClick(evt) {
-      if (evt.target.classList.contains("popup")) {
-        closeAllPopups();
-      }
-    }
-    document.addEventListener("mousedown", handleOverlayClick);
-
-    return () => {
-      document.removeEventListener("mousedown", handleOverlayClick);
-    };
-  }, []);*/
 
   React.useEffect(() => {
     function handleEscapeClick(evt) {

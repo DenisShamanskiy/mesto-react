@@ -75,16 +75,6 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  ///
-
-  changeLikeCardStatus(id, isLiked) {
-    if (isLiked) {
-      return this.dislikeCard(id);
-    } else {
-      return this.likeCard(id);
-    }
-  }
-
   likeCard(id) {
     return fetch(`${this._urlServer}/${this._idCohort}/cards/likes/${id}`, {
       method: "PUT",
