@@ -2,6 +2,7 @@ import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoadingData }) {
+  //const inputAvatarRef = React.useRef();
   const [link, setLink] = React.useState("");
   const [inputValid, setInputValid] = React.useState(true);
   const [buttonSubmitState, setButtonSubmitState] = React.useState(false);
