@@ -75,6 +75,7 @@ class Api {
     }).then(this._checkResponse);
   }
 
+  /*
   likeCard(id) {
     return fetch(`${this._urlServer}/${this._idCohort}/cards/likes/${id}`, {
       method: "PUT",
@@ -91,6 +92,20 @@ class Api {
         authorization: this._token,
       },
     }).then(this._checkResponse);
+  }
+*/
+
+  changeLike(card, isLikedStatus) {
+    console.log(isLikedStatus);
+    return fetch(
+      `${this._urlServer}/${this._idCohort}/cards/likes/${card._id}`,
+      {
+        method: !isLikedStatus ? "DELETE" : "PUT",
+        headers: {
+          authorization: this._token,
+        },
+      }
+    ).then(this._checkResponse);
   }
 
   getCountsOfLikes(card) {

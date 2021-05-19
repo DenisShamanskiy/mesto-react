@@ -93,7 +93,7 @@ function App() {
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     api
-      .changeLikeCardStatus(card._id, isLiked)
+      .changeLike(card, !isLiked)
       .then((newCard) => {
         setCards(
           cards.map((currentCard) =>
@@ -149,6 +149,7 @@ function App() {
     setAddPlacePopupOpen(false);
     setIsDeleteCardPopupOpen(false);
     setSelectedCard({});
+    setCardForDelete({});
   }
 
   React.useEffect(() => {
