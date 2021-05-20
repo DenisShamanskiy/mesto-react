@@ -2,10 +2,20 @@
   width: 22px;
   height: 19px;
   background-image: url(../../../images/elements__button-like.svg);
+<<<<<<< HEAD
   margin: auto 0;
   background-color: #ffffff;
   border: none;
   cursor: pointer;
+=======
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+  margin: auto 0;
+  transition: opacity 0.2s;
+>>>>>>> develop_11
 }
 
 .elements__button-like:hover {

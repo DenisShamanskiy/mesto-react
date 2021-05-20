@@ -11,8 +11,17 @@ function ImagePopup({ card, onClose }) {
           onClick={onClose}
         ></button>
         <figure className="popup__figure">
+<<<<<<< HEAD
           <img className="popup__photo" src={`${card.link}`} alt="" />
           <div className="popup__caption"></div>
+=======
+          <img
+            className="popup__photo"
+            src={`${card.link}`}
+            alt={`${card.name}`}
+          />
+          <div className="popup__caption">{card.name}</div>
+>>>>>>> develop_11
         </figure>
       </div>
     </div>
