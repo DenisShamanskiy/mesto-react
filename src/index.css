@@ -22,7 +22,6 @@
 @import url(./blocks/elements/__button-remove/elements__button-remove.css);
 @import url(./blocks/elements/__button-remove/_visible/elements__button-remove_visible.css);
 @import url(./blocks/elements/__button-remove/_hidden/elements__button-remove_hidden.css);
-/*@import url(./blocks/elements/__button-remove/_active/elements__button-remove_active.css);*/
 @import url(./blocks/elements/__description/elements__description.css);
 @import url(./blocks/elements/__image/elements__image.css);
 @import url(./blocks/elements/__item/elements__item.css);

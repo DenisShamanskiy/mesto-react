@@ -7,6 +7,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoadingData }) {
   const [inputValid, setInputValid] = React.useState(true);
   const [buttonSubmitState, setButtonSubmitState] = React.useState(false);
   const [isValidationMessage, setIsValidationMessage] = React.useState("");
+  const [linkInputInitial, setLinkInputInitial] = React.useState(true);
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -19,7 +20,9 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoadingData }) {
     if (!evt.target.validity.valid) {
       setInputValid(false);
       setIsValidationMessage(evt.target.validationMessage);
+      setLinkInputInitial(false);
     } else {
+      setLinkInputInitial(false);
       setInputValid(true);
     }
   }
@@ -27,16 +30,17 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoadingData }) {
   React.useEffect(() => {
     setInputValid(true);
     setButtonSubmitState(false);
+    setLinkInputInitial(true);
     setLink("");
   }, [isOpen]);
 
   React.useEffect(() => {
-    if (inputValid) {
+    if (inputValid && !linkInputInitial) {
       setButtonSubmitState(true);
     } else {
       setButtonSubmitState(false);
     }
-  }, [inputValid]);
+  }, [inputValid, linkInputInitial]);
 
   /*function handleSubmit(evt) {
     evt.preventDefault();

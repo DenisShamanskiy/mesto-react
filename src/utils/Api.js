@@ -96,7 +96,7 @@ class Api {
 */
 
   changeLike(card, isLikedStatus) {
-    console.log(isLikedStatus);
+    //console.log(isLikedStatus);
     return fetch(
       `${this._urlServer}/${this._idCohort}/cards/likes/${card._id}`,
       {
