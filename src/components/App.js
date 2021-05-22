@@ -1,5 +1,4 @@
-import React from "react";
-import "../index.css";
+import React, { useState, useEffect } from "react";
 import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
@@ -13,24 +12,20 @@ import api from "../utils/api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function App() {
-  const [currentUser, setCurrentUser] = React.useState({});
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
-    React.useState(false);
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-  const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] =
-    React.useState(false);
-  const [cards, setCards] = React.useState([]);
-  const [selectedCard, setSelectedCard] = React.useState({});
-  const [cardForDelete, setCardForDelete] = React.useState({});
-  const [isLoadingSetUserInfo, setIsLoadingSetUserInfo] = React.useState(false);
-  const [isLoadingAvatarUpdate, setIsLoadingAvatarUpdate] =
-    React.useState(false);
-  const [isLoadingAddPlaceSubmit, setIsLoadingAddPlaceSubmit] =
-    React.useState(false);
-  const [isLoadingDeleteCard, setIsLoadingDeleteCard] = React.useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = useState(false);
+  const [cards, setCards] = useState([]);
+  const [selectedCard, setSelectedCard] = useState({});
+  const [cardForDelete, setCardForDelete] = useState({});
+  const [isLoadingSetUserInfo, setIsLoadingSetUserInfo] = useState(false);
+  const [isLoadingAvatarUpdate, setIsLoadingAvatarUpdate] = useState(false);
+  const [isLoadingAddPlaceSubmit, setIsLoadingAddPlaceSubmit] = useState(false);
+  const [isLoadingDeleteCard, setIsLoadingDeleteCard] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     api
       .getInitialData()
       .then(([userData, cardsData]) => {
@@ -95,11 +90,16 @@ function App() {
     api
       .changeLike(card, !isLiked)
       .then((newCard) => {
-        setCards(
+        setCards((cards) =>
           cards.map((currentCard) =>
             currentCard._id === card._id ? newCard : currentCard
           )
         );
+        /*setCards(
+          cards.map((currentCard) =>
+            currentCard._id === card._id ? newCard : currentCard
+          )
+        );*/
       })
       .catch((err) => {
         console.log(err);
@@ -152,7 +152,7 @@ function App() {
     setCardForDelete({});
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     function handleEscapeClick(evt) {
       if (evt.key === "Escape") {
         closeAllPopups();

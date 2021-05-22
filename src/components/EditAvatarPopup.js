@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoadingData }) {
-  //const inputAvatarRef = React.useRef();
-  const [link, setLink] = React.useState("");
-  const [inputValid, setInputValid] = React.useState(true);
-  const [buttonSubmitState, setButtonSubmitState] = React.useState(false);
-  const [isValidationMessage, setIsValidationMessage] = React.useState("");
-  const [linkInputInitial, setLinkInputInitial] = React.useState(true);
+  const [link, setLink] = useState("");
+  const [inputValid, setInputValid] = useState(true);
+  const [buttonSubmitState, setButtonSubmitState] = useState(false);
+  const [isValidationMessage, setIsValidationMessage] = useState("");
+  const [linkInputInitial, setLinkInputInitial] = useState(true);
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -16,7 +15,6 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoadingData }) {
 
   function handleChange(evt) {
     setLink(evt.target.value);
-    //console.log(evt.target.validationMessage);
     if (!evt.target.validity.valid) {
       setInputValid(false);
       setIsValidationMessage(evt.target.validationMessage);
@@ -27,27 +25,20 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoadingData }) {
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     setInputValid(true);
     setButtonSubmitState(false);
     setLinkInputInitial(true);
     setLink("");
   }, [isOpen]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (inputValid && !linkInputInitial) {
       setButtonSubmitState(true);
     } else {
       setButtonSubmitState(false);
     }
   }, [inputValid, linkInputInitial]);
-
-  /*function handleSubmit(evt) {
-    evt.preventDefault();
-    onUpdateAvatar({
-      avatar: inputAvatarRef.current.value,
-    });
-  }*/
 
   return (
     <PopupWithForm
@@ -60,7 +51,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoadingData }) {
       onSubmit={handleSubmit}
       contentLabel="Форма редактирования аватара пользователя"
       isLoadingData={isLoadingData}
-      buttonSubmitState={buttonSubmitState}
+      isFormValid={buttonSubmitState}
     >
       <fieldset className="popup__fieldset">
         <label className="popup__label">

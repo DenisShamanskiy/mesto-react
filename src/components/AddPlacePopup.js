@@ -1,18 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
-  const [place, setPlace] = React.useState("");
-  const [link, setLink] = React.useState("");
+  const [place, setPlace] = useState("");
+  const [link, setLink] = useState("");
 
-  const [inputValidPlace, setInputValidPlace] = React.useState(true);
-  const [inputValidLink, setInputValidLink] = React.useState(true);
-  const [placeValidationMessage, setPlaceValidationMessage] =
-    React.useState("");
-  const [linkValidationMessage, setLinkValidationMessage] = React.useState("");
-  const [buttonSubmitState, setButtonSubmitState] = React.useState(false);
-  const [placeInputInitial, setPlaceInputInitial] = React.useState(true);
-  const [linkInputInitial, setLinkInputInitial] = React.useState(true);
+  const [inputValidPlace, setInputValidPlace] = useState(true);
+  const [inputValidLink, setInputValidLink] = useState(true);
+  const [placeValidationMessage, setPlaceValidationMessage] = useState("");
+  const [linkValidationMessage, setLinkValidationMessage] = useState("");
+  const [buttonSubmitState, setButtonSubmitState] = useState(false);
+  const [placeInputInitial, setPlaceInputInitial] = useState(true);
+  const [linkInputInitial, setLinkInputInitial] = useState(true);
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -21,15 +20,31 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
 
   function handlePlace(evt) {
     setPlace(evt.target.value);
-    checkPlaceValidation(evt.target);
+    setInputValidPlace(evt.target.validity.valid);
+    if (!evt.target.validity.valid) {
+      setPlaceInputInitial(false);
+      setInputValidPlace(false);
+      setPlaceValidationMessage(evt.target.validationMessage);
+    } else {
+      setPlaceInputInitial(false);
+      setInputValidPlace(true);
+    }
   }
 
   function handleLink(evt) {
     setLink(evt.target.value);
-    checkLinkValidation(evt.target);
+    setInputValidLink(evt.target.validity.valid);
+    if (!evt.target.validity.valid) {
+      setLinkInputInitial(false);
+      setInputValidLink(false);
+      setLinkValidationMessage(evt.target.validationMessage);
+    } else {
+      setLinkInputInitial(false);
+      setInputValidLink(true);
+    }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     setPlace("");
     setLink("");
     setInputValidPlace(true);
@@ -39,7 +54,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
     setLinkInputInitial(true);
   }, [isOpen]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       inputValidPlace &&
       inputValidLink &&
@@ -52,7 +67,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
     }
   }, [inputValidPlace, inputValidLink, placeInputInitial, linkInputInitial]);
 
-  function checkPlaceValidation(inputElement) {
+  /*function checkPlaceValidation(inputElement) {
     if (!inputElement.validity.valid) {
       setPlaceInputInitial(false);
       setInputValidPlace(false);
@@ -61,9 +76,9 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
       setPlaceInputInitial(false);
       setInputValidPlace(true);
     }
-  }
+  }*/
 
-  function checkLinkValidation(inputElement) {
+  /*function checkLinkValidation(inputElement) {
     if (!inputElement.validity.valid) {
       setLinkInputInitial(false);
       setInputValidLink(false);
@@ -72,7 +87,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
       setLinkInputInitial(false);
       setInputValidLink(true);
     }
-  }
+  }*/
 
   return (
     <PopupWithForm
@@ -85,7 +100,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
       onSubmit={handleSubmit}
       contentLabel="Форма добавления изображения"
       isLoadingData={isLoadingData}
-      buttonSubmitState={buttonSubmitState}
+      isFormValid={buttonSubmitState}
     >
       <fieldset className="popup__fieldset">
         <label className="popup__label">

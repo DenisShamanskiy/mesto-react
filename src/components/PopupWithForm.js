@@ -10,7 +10,8 @@ function PopupWithForm({
   isOpen,
   onClose,
   onSubmit,
-  buttonSubmitState,
+  isFormValid,
+  //buttonSubmitState
 }) {
   return (
     <div className={`popup ${isOpen ? "popup_opened" : ""}`}>
@@ -32,9 +33,9 @@ function PopupWithForm({
           <button
             type="submit"
             className={`popup__button-save ${
-              !buttonSubmitState ? "popup__button-save_inactive" : ""
+              !isFormValid ? "popup__button-save_inactive" : ""
             }`}
-            disabled={!buttonSubmitState ? true : ""}
+            disabled={!isFormValid ? true : ""}
           >
             {isLoadingData ? loadingButtonSubmitText : buttonSubmitText}
           </button>
