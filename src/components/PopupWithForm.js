@@ -11,7 +11,6 @@ function PopupWithForm({
   onClose,
   onSubmit,
   isFormValid,
-  //buttonSubmitState
 }) {
   return (
     <div className={`popup ${isOpen ? "popup_opened" : ""}`}>

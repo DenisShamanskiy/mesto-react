@@ -67,28 +67,6 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
     }
   }, [inputValidPlace, inputValidLink, placeInputInitial, linkInputInitial]);
 
-  /*function checkPlaceValidation(inputElement) {
-    if (!inputElement.validity.valid) {
-      setPlaceInputInitial(false);
-      setInputValidPlace(false);
-      setPlaceValidationMessage(inputElement.validationMessage);
-    } else {
-      setPlaceInputInitial(false);
-      setInputValidPlace(true);
-    }
-  }*/
-
-  /*function checkLinkValidation(inputElement) {
-    if (!inputElement.validity.valid) {
-      setLinkInputInitial(false);
-      setInputValidLink(false);
-      setLinkValidationMessage(inputElement.validationMessage);
-    } else {
-      setLinkInputInitial(false);
-      setInputValidLink(true);
-    }
-  }*/
-
   return (
     <PopupWithForm
       title="Новое место"

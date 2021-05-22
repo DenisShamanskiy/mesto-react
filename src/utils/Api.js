@@ -75,28 +75,7 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  /*
-  likeCard(id) {
-    return fetch(`${this._urlServer}/${this._idCohort}/cards/likes/${id}`, {
-      method: "PUT",
-      headers: {
-        authorization: this._token,
-      },
-    }).then(this._checkResponse);
-  }
-
-  dislikeCard(id) {
-    return fetch(`${this._urlServer}/${this._idCohort}/cards/likes/${id}`, {
-      method: "DELETE",
-      headers: {
-        authorization: this._token,
-      },
-    }).then(this._checkResponse);
-  }
-*/
-
   changeLike(card, isLikedStatus) {
-    //console.log(isLikedStatus);
     return fetch(
       `${this._urlServer}/${this._idCohort}/cards/likes/${card._id}`,
       {

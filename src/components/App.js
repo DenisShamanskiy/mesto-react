@@ -95,11 +95,6 @@ function App() {
             currentCard._id === card._id ? newCard : currentCard
           )
         );
-        /*setCards(
-          cards.map((currentCard) =>
-            currentCard._id === card._id ? newCard : currentCard
-          )
-        );*/
       })
       .catch((err) => {
         console.log(err);

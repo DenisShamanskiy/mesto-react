@@ -57,24 +57,6 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoadingData }) {
     }
   }, [inputValidName, inputValidDescription]);
 
-  /*function checkNameValidation(inputElement) {
-    if (!inputElement.validity.valid) {
-      setInputValidName(false);
-      setNameValidationMessage(inputElement.validationMessage);
-    } else {
-      setInputValidName(true);
-    }
-  }*/
-
-  /*function checkDescriptionValidation(inputElement) {
-    if (!inputElement.validity.valid) {
-      setInputValidDescription(false);
-      setDescriptionValidationMessage(inputElement.validationMessage);
-    } else {
-      setInputValidDescription(true);
-    }
-  }*/
-
   return (
     <PopupWithForm
       title="Редактировать профиль"
