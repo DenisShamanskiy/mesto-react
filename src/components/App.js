@@ -53,7 +53,7 @@ function App() {
       });
   }
 
-  function handleUpdateAvatar(avatar) {
+  function handleUpdateAvatar({ avatar }) {
     setIsLoadingAvatarUpdate(true);
     api
       .setUserAvatar(avatar)

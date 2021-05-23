@@ -9,7 +9,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
   const [inputValidLink, setInputValidLink] = useState(true);
   const [placeValidationMessage, setPlaceValidationMessage] = useState("");
   const [linkValidationMessage, setLinkValidationMessage] = useState("");
-  const [buttonSubmitState, setButtonSubmitState] = useState(false);
+  const [isFormValid, setFormValid] = useState(false);
   const [placeInputInitial, setPlaceInputInitial] = useState(true);
   const [linkInputInitial, setLinkInputInitial] = useState(true);
 
@@ -22,26 +22,24 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
     setPlace(evt.target.value);
     setInputValidPlace(evt.target.validity.valid);
     if (!evt.target.validity.valid) {
-      setPlaceInputInitial(false);
       setInputValidPlace(false);
-      setPlaceValidationMessage(evt.target.validationMessage);
     } else {
       setPlaceInputInitial(false);
       setInputValidPlace(true);
     }
+    setPlaceValidationMessage(evt.target.validationMessage);
   }
 
   function handleLink(evt) {
     setLink(evt.target.value);
     setInputValidLink(evt.target.validity.valid);
     if (!evt.target.validity.valid) {
-      setLinkInputInitial(false);
       setInputValidLink(false);
-      setLinkValidationMessage(evt.target.validationMessage);
     } else {
       setLinkInputInitial(false);
       setInputValidLink(true);
     }
+    setLinkValidationMessage(evt.target.validationMessage);
   }
 
   useEffect(() => {
@@ -49,7 +47,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
     setLink("");
     setInputValidPlace(true);
     setInputValidLink(true);
-    setButtonSubmitState(false);
+    setFormValid(false);
     setPlaceInputInitial(true);
     setLinkInputInitial(true);
   }, [isOpen]);
@@ -61,9 +59,9 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
       !placeInputInitial &&
       !linkInputInitial
     ) {
-      setButtonSubmitState(true);
+      setFormValid(true);
     } else {
-      setButtonSubmitState(false);
+      setFormValid(false);
     }
   }, [inputValidPlace, inputValidLink, placeInputInitial, linkInputInitial]);
 
@@ -78,7 +76,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
       onSubmit={handleSubmit}
       contentLabel="Форма добавления изображения"
       isLoadingData={isLoadingData}
-      isFormValid={buttonSubmitState}
+      isFormValid={isFormValid}
     >
       <fieldset className="popup__fieldset">
         <label className="popup__label">

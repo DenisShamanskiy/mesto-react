@@ -28,17 +28,13 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoadingData }) {
   function handleName(evt) {
     setName(evt.target.value);
     setInputValidName(evt.target.validity.valid);
-    if (!evt.target.validity.valid) {
-      setNameValidationMessage(evt.target.validationMessage);
-    }
+    setNameValidationMessage(evt.target.validationMessage);
   }
 
   function handleDescription(evt) {
     setDescription(evt.target.value);
     setInputValidDescription(evt.target.validity.valid);
-    if (!evt.target.validity.valid) {
-      setDescriptionValidationMessage(evt.target.validationMessage);
-    }
+    setDescriptionValidationMessage(evt.target.validationMessage);
   }
 
   function handleSubmit(evt) {
