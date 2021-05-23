@@ -3,10 +3,8 @@ import PopupWithForm from "./PopupWithForm";
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoadingData }) {
   const [link, setLink] = useState("");
-  //const [inputValid, setInputValid] = useState(true);
-  const [buttonSubmitState, setButtonSubmitState] = useState(false);
+  const [isFormValid, setFormValid] = useState(false);
   const [isValidationMessage, setIsValidationMessage] = useState("");
-  //const [linkInputInitial, setLinkInputInitial] = useState(true);
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -18,28 +16,16 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoadingData }) {
     setIsValidationMessage(evt.target.validationMessage);
   }
 
-  /*function handleChange(evt) {
-    setLink(evt.target.value);
-    if (!evt.target.validity.valid) {
-      setInputValid(false);
-      setLinkInputInitial(false);
-    } else {
-      setLinkInputInitial(false);
-      setInputValid(true);
-    }
-    setIsValidationMessage(evt.target.validationMessage);
-  }*/
-
   useEffect(() => {
-    setButtonSubmitState(false);
+    setFormValid(false);
     setLink("");
   }, [isOpen]);
 
   useEffect(() => {
     if (!isValidationMessage) {
-      setButtonSubmitState(true);
+      setFormValid(true);
     } else {
-      setButtonSubmitState(false);
+      setFormValid(false);
     }
   }, [isValidationMessage, link]);
 
@@ -54,7 +40,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoadingData }) {
       onSubmit={handleSubmit}
       contentLabel="Форма редактирования аватара пользователя"
       isLoadingData={isLoadingData}
-      isFormValid={buttonSubmitState}
+      isFormValid={isFormValid}
     >
       <fieldset className="popup__fieldset">
         <label className="popup__label">

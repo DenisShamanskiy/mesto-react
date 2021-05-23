@@ -14,7 +14,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoadingData }) {
   const [nameValidationMessage, setNameValidationMessage] = useState("");
   const [descriptionValidationMessage, setDescriptionValidationMessage] =
     useState("");
-  const [buttonSubmitState, setButtonSubmitState] = useState(false);
+  const [isFormValid, setFormValid] = useState(false);
 
   useEffect(() => {
     if (currentUser.name && currentUser.about) {
@@ -47,9 +47,9 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoadingData }) {
 
   useEffect(() => {
     if (inputValidName && inputValidDescription) {
-      setButtonSubmitState(true);
+      setFormValid(true);
     } else {
-      setButtonSubmitState(false);
+      setFormValid(false);
     }
   }, [inputValidName, inputValidDescription]);
 
@@ -58,7 +58,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoadingData }) {
       title="Редактировать профиль"
       name="user"
       buttonSubmitText="Сохранить"
-      isFormValid={buttonSubmitState}
+      isFormValid={isFormValid}
       loadingButtonSubmitText="Загрузка..."
       isOpen={isOpen}
       onClose={onClose}

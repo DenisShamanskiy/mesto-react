@@ -34,7 +34,7 @@ function PopupWithForm({
             className={`popup__button-save ${
               !isFormValid ? "popup__button-save_inactive" : ""
             }`}
-            disabled={!isFormValid ? true : ""}
+            disabled={!isFormValid}
           >
             {isLoadingData ? loadingButtonSubmitText : buttonSubmitText}
           </button>
