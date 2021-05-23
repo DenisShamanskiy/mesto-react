@@ -8,8 +8,6 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoadingData }) {
   const [isValidationMessage, setIsValidationMessage] = useState("");
   //const [linkInputInitial, setLinkInputInitial] = useState(true);
 
-  console.log(link);
-
   function handleSubmit(evt) {
     evt.preventDefault();
     onUpdateAvatar({ avatar: link });
