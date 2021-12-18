@@ -17,26 +17,12 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-<<<<<<< HEAD
-    "deploy": "gh-pages -d dist"
-=======
     "deploy": "gh-pages -d build"
->>>>>>> develop_11
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DenisShamanskiy/mesto-react.git"
-  },
-<<<<<<< HEAD
-  "author": "Denis hamanskiy",
-=======
+  
   "author": "Denis Shamanskiy",
->>>>>>> develop_11
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/DenisShamanskiy/mesto-react/issues"
-  },
-  "homepage": "https://DenisShamanskiy.github.io/mesto-react/",
+ 
   "eslintConfig": {
     "extends": [
       "react-app",
