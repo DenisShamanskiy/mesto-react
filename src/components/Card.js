@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-function Card({ card, onClickCard }) {
-=======
 import React from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
@@ -18,13 +15,10 @@ function Card({ card, onClickCard, onCardLike, onCardDelete }) {
     ? "elements__button-like elements__button-like_active"
     : "elements__button-like";
 
->>>>>>> develop_11
   function handleClick() {
     onClickCard(card);
   }
 
-<<<<<<< HEAD
-=======
   function handleLikeClick() {
     onCardLike(card);
   }
@@ -33,24 +27,19 @@ function Card({ card, onClickCard, onCardLike, onCardDelete }) {
     onCardDelete(card);
   }
 
->>>>>>> develop_11
   return (
     <div className="elements__item">
       <img
         className="elements__image"
         src={`${card.link}`}
-        alt=""
+        alt={`${card.name}`}
         onClick={handleClick}
       />
       <button
         type="button"
         aria-label="Удалить"
-<<<<<<< HEAD
-        className="elements__button-remove"
-=======
         className={cardDeleteButtonClassName}
         onClick={handleDeleteClick}
->>>>>>> develop_11
       ></button>
       <div className="elements__description">
         <h2 className="elements__name">{card.name}</h2>
@@ -58,12 +47,8 @@ function Card({ card, onClickCard, onCardLike, onCardDelete }) {
           <button
             type="button"
             aria-label="Нравится"
-<<<<<<< HEAD
-            className="elements__button-like"
-=======
             className={cardLikeButtonClassName}
             onClick={handleLikeClick}
->>>>>>> develop_11
           ></button>
           <div className="elements__like-counter">{card.likes.length}</div>
         </div>

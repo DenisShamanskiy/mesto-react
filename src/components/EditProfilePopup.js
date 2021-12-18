@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -6,38 +6,35 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoadingData }) {
   const currentUser = React.useContext(CurrentUserContext);
 
-  const [name, setName] = React.useState("Name");
-  const [description, setDescription] = React.useState("About");
+  const [name, setName] = useState("Name");
+  const [description, setDescription] = useState("About");
 
-  const [inputValidName, setInputValidName] = React.useState(true);
-  const [inputValidDescription, setInputValidDescription] =
-    React.useState(true);
-  const [nameValidationMessage, setNameValidationMessage] = React.useState("");
+  const [inputValidName, setInputValidName] = useState(true);
+  const [inputValidDescription, setInputValidDescription] = useState(true);
+  const [nameValidationMessage, setNameValidationMessage] = useState("");
   const [descriptionValidationMessage, setDescriptionValidationMessage] =
-    React.useState("");
-  const [buttonSubmitState, setButtonSubmitState] = React.useState(false);
+    useState("");
+  const [isFormValid, setFormValid] = useState(false);
 
-  React.useEffect(
-    () => {
-      if (currentUser.name && currentUser.about) {
-        setName(currentUser.name);
-        setDescription(currentUser.about);
-      }
-      setInputValidName(true);
-      setInputValidDescription(true);
-    },
-    [currentUser],
-    isOpen
-  );
+  useEffect(() => {
+    if (currentUser.name && currentUser.about) {
+      setName(currentUser.name);
+      setDescription(currentUser.about);
+    }
+    setInputValidName(true);
+    setInputValidDescription(true);
+  }, [currentUser, isOpen]);
 
   function handleName(evt) {
     setName(evt.target.value);
-    checkNameValidation(evt.target);
+    setInputValidName(evt.target.validity.valid);
+    setNameValidationMessage(evt.target.validationMessage);
   }
 
   function handleDescription(evt) {
     setDescription(evt.target.value);
-    checkDescriptionValidation(evt.target);
+    setInputValidDescription(evt.target.validity.valid);
+    setDescriptionValidationMessage(evt.target.validationMessage);
   }
 
   function handleSubmit(evt) {
@@ -48,38 +45,20 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoadingData }) {
     });
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (inputValidName && inputValidDescription) {
-      setButtonSubmitState(true);
+      setFormValid(true);
     } else {
-      setButtonSubmitState(false);
+      setFormValid(false);
     }
   }, [inputValidName, inputValidDescription]);
-
-  function checkNameValidation(inputElement) {
-    if (!inputElement.validity.valid) {
-      setInputValidName(false);
-      setNameValidationMessage(inputElement.validationMessage);
-    } else {
-      setInputValidName(true);
-    }
-  }
-
-  function checkDescriptionValidation(inputElement) {
-    if (!inputElement.validity.valid) {
-      setInputValidDescription(false);
-      setDescriptionValidationMessage(inputElement.validationMessage);
-    } else {
-      setInputValidDescription(true);
-    }
-  }
 
   return (
     <PopupWithForm
       title="Редактировать профиль"
       name="user"
       buttonSubmitText="Сохранить"
-      buttonSubmitState={buttonSubmitState}
+      isFormValid={isFormValid}
       loadingButtonSubmitText="Загрузка..."
       isOpen={isOpen}
       onClose={onClose}

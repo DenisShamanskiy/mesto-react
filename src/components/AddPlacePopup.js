@@ -1,18 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
-  const [place, setPlace] = React.useState("");
-  const [link, setLink] = React.useState("");
+  const [place, setPlace] = useState("");
+  const [link, setLink] = useState("");
 
-  const [inputValidPlace, setInputValidPlace] = React.useState(true);
-  const [inputValidLink, setInputValidLink] = React.useState(true);
-  const [placeValidationMessage, setPlaceValidationMessage] =
-    React.useState("");
-  const [linkValidationMessage, setLinkValidationMessage] = React.useState("");
-  const [buttonSubmitState, setButtonSubmitState] = React.useState(false);
-  const [placeInputInitial, setPlaceInputInitial] = React.useState(true);
-  const [linkInputInitial, setLinkInputInitial] = React.useState(true);
+  const [placeValidationMessage, setPlaceValidationMessage] = useState("");
+  const [linkValidationMessage, setLinkValidationMessage] = useState("");
+  const [isFormValid, setFormValid] = useState(false);
+  const [placeInputInitial, setPlaceInputInitial] = useState(true);
+  const [linkInputInitial, setLinkInputInitial] = useState(true);
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -21,58 +18,43 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
 
   function handlePlace(evt) {
     setPlace(evt.target.value);
-    checkPlaceValidation(evt.target);
+    setPlaceInputInitial(false);
+    setPlaceValidationMessage(evt.target.validationMessage);
   }
 
   function handleLink(evt) {
     setLink(evt.target.value);
-    checkLinkValidation(evt.target);
+    setLinkInputInitial(false);
+    setLinkValidationMessage(evt.target.validationMessage);
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     setPlace("");
     setLink("");
-    setInputValidPlace(true);
-    setInputValidLink(true);
-    setButtonSubmitState(false);
+    setFormValid(false);
     setPlaceInputInitial(true);
     setLinkInputInitial(true);
   }, [isOpen]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
-      inputValidPlace &&
-      inputValidLink &&
+      !placeValidationMessage &&
+      !linkValidationMessage &&
       !placeInputInitial &&
       !linkInputInitial
     ) {
-      setButtonSubmitState(true);
+      setFormValid(true);
     } else {
-      setButtonSubmitState(false);
+      setFormValid(false);
     }
-  }, [inputValidPlace, inputValidLink, placeInputInitial, linkInputInitial]);
-
-  function checkPlaceValidation(inputElement) {
-    if (!inputElement.validity.valid) {
-      setPlaceInputInitial(false);
-      setInputValidPlace(false);
-      setPlaceValidationMessage(inputElement.validationMessage);
-    } else {
-      setPlaceInputInitial(false);
-      setInputValidPlace(true);
-    }
-  }
-
-  function checkLinkValidation(inputElement) {
-    if (!inputElement.validity.valid) {
-      setLinkInputInitial(false);
-      setInputValidLink(false);
-      setLinkValidationMessage(inputElement.validationMessage);
-    } else {
-      setLinkInputInitial(false);
-      setInputValidLink(true);
-    }
-  }
+  }, [
+    placeInputInitial,
+    linkInputInitial,
+    placeValidationMessage,
+    linkValidationMessage,
+    place,
+    link,
+  ]);
 
   return (
     <PopupWithForm
@@ -85,7 +67,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
       onSubmit={handleSubmit}
       contentLabel="Форма добавления изображения"
       isLoadingData={isLoadingData}
-      buttonSubmitState={buttonSubmitState}
+      isFormValid={isFormValid}
     >
       <fieldset className="popup__fieldset">
         <label className="popup__label">
@@ -94,7 +76,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
             name="place"
             placeholder="Название"
             className={`popup__input ${
-              !inputValidPlace ? "popup__input_type_error" : ""
+              placeValidationMessage ? "popup__input_type_error" : ""
             }`}
             required
             minLength="2"
@@ -104,7 +86,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
           />
           <span
             className={`popup__input-error ${
-              !inputValidPlace ? "popup__input-error_active" : ""
+              placeValidationMessage ? "popup__input-error_active" : ""
             }`}
           >
             {placeValidationMessage}
@@ -116,7 +98,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
             name="link"
             placeholder="Ссылка на картинку"
             className={`popup__input ${
-              !inputValidLink ? "popup__input_type_error" : ""
+              linkValidationMessage ? "popup__input_type_error" : ""
             }`}
             required
             value={link}
@@ -124,7 +106,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingData }) {
           />
           <span
             className={`popup__input-error ${
-              !inputValidLink ? "popup__input-error_active" : ""
+              linkValidationMessage ? "popup__input-error_active" : ""
             }`}
           >
             {linkValidationMessage}

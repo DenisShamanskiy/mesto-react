@@ -1,21 +1,7 @@
-import React from "react";
-import "../index.css";
+import React, { useState, useEffect } from "react";
 import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
-<<<<<<< HEAD
-import PopupWithForm from "./PopupWithForm.js";
-import ImagePopup from "./ImagePopup.js";
-
-function App() {
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(
-    false
-  );
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-
-  const [selectedCard, setSelectedCard] = React.useState({});
-=======
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
@@ -26,24 +12,20 @@ import api from "../utils/api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function App() {
-  const [currentUser, setCurrentUser] = React.useState({});
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
-    React.useState(false);
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-  const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] =
-    React.useState(false);
-  const [cards, setCards] = React.useState([]);
-  const [selectedCard, setSelectedCard] = React.useState({});
-  const [cardForDelete, setCardForDelete] = React.useState({});
-  const [isLoadingSetUserInfo, setIsLoadingSetUserInfo] = React.useState(false);
-  const [isLoadingAvatarUpdate, setIsLoadingAvatarUpdate] =
-    React.useState(false);
-  const [isLoadingAddPlaceSubmit, setIsLoadingAddPlaceSubmit] =
-    React.useState(false);
-  const [isLoadingDeleteCard, setIsLoadingDeleteCard] = React.useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = useState(false);
+  const [cards, setCards] = useState([]);
+  const [selectedCard, setSelectedCard] = useState({});
+  const [cardForDelete, setCardForDelete] = useState({});
+  const [isLoadingSetUserInfo, setIsLoadingSetUserInfo] = useState(false);
+  const [isLoadingAvatarUpdate, setIsLoadingAvatarUpdate] = useState(false);
+  const [isLoadingAddPlaceSubmit, setIsLoadingAddPlaceSubmit] = useState(false);
+  const [isLoadingDeleteCard, setIsLoadingDeleteCard] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     api
       .getInitialData()
       .then(([userData, cardsData]) => {
@@ -71,7 +53,7 @@ function App() {
       });
   }
 
-  function handleUpdateAvatar(avatar) {
+  function handleUpdateAvatar({ avatar }) {
     setIsLoadingAvatarUpdate(true);
     api
       .setUserAvatar(avatar)
@@ -108,7 +90,7 @@ function App() {
     api
       .changeLike(card, !isLiked)
       .then((newCard) => {
-        setCards(
+        setCards((cards) =>
           cards.map((currentCard) =>
             currentCard._id === card._id ? newCard : currentCard
           )
@@ -134,33 +116,20 @@ function App() {
         setIsLoadingDeleteCard(false);
       });
   }
->>>>>>> develop_11
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
   }
-<<<<<<< HEAD
-  function handleEditProfileClick() {
-    setEditProfilePopupOpen(true);
-  }
-=======
 
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true);
   }
 
->>>>>>> develop_11
   function handleAddPlaceClick() {
     setAddPlacePopupOpen(true);
   }
 
   function handleCardClick(card) {
-<<<<<<< HEAD
-    //console.log(card);
-    setSelectedCard(card);
-  }
-
-=======
     setSelectedCard(card);
   }
 
@@ -169,125 +138,16 @@ function App() {
     setIsDeleteCardPopupOpen(true);
   }
 
->>>>>>> develop_11
   function closeAllPopups() {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
-<<<<<<< HEAD
-    setSelectedCard({});
-  }
-
-  return (
-    <div className="page">
-      <Header />
-      <Main
-        editProfile={handleEditProfileClick}
-        editAvatar={handleEditAvatarClick}
-        addPlace={handleAddPlaceClick}
-        onClickCard={handleCardClick}
-      />
-      <Footer />
-
-      <PopupWithForm
-        title="Редактировать профиль"
-        name="user"
-        buttonSubmitText="Сохранить"
-        isOpen={isEditProfilePopupOpen}
-        onClose={closeAllPopups}
-      >
-        <fieldset className="popup__fieldset">
-          <label className="popup__label">
-            <input
-              type="text"
-              name="name"
-              placeholder="Имя"
-              className="popup__input popup__input_type_name"
-              required
-              minLength="2"
-              maxLength="40"
-            />
-            <span className="popup__input-error popup__input-error_type_name"></span>
-          </label>
-          <label className="popup__field">
-            <input
-              type="text"
-              name="about"
-              placeholder="Что-то о себе"
-              className="popup__input popup__input_type_about"
-              required
-              minLength="2"
-              maxLength="200"
-            />
-            <span className="popup__input-error popup__input-error_type_about"></span>
-          </label>
-        </fieldset>
-      </PopupWithForm>
-
-      <PopupWithForm
-        title="Новое место"
-        name="place"
-        buttonSubmitText="Создать"
-        isOpen={isAddPlacePopupOpen}
-        onClose={closeAllPopups}
-      >
-        <fieldset className="popup__fieldset">
-          <label className="popup__label">
-            <input
-              type="text"
-              name="place"
-              placeholder="Название"
-              className="popup__input popup__input_type_title"
-              required
-              minLength="2"
-              maxLength="30"
-            />
-            <span className="popup__input-error popup__input-error_type_title"></span>
-          </label>
-          <label className="popup__field">
-            <input
-              type="url"
-              name="link"
-              placeholder="Ссылка на картинку"
-              className="popup__input popup__input_type_link"
-              required
-            />
-            <span className="popup__input-error popup__input-error_type_link"></span>
-          </label>
-        </fieldset>
-      </PopupWithForm>
-
-      <PopupWithForm
-        title="Обновить аватар"
-        name="avatar"
-        buttonSubmitText="Сохранить"
-        isOpen={isEditAvatarPopupOpen}
-        onClose={closeAllPopups}
-      >
-        <fieldset className="popup__fieldset">
-          <label className="popup__label">
-            <input
-              type="url"
-              name="link"
-              placeholder="Ссылка на картинку"
-              className="popup__input popup__input_type_link"
-              required
-            />
-            <span className="popup__input-error popup__input-error_type_link"></span>
-          </label>
-        </fieldset>
-      </PopupWithForm>
-
-      <PopupWithForm title="Вы уверены?" name="remove" buttonSubmitText="Да" />
-
-      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-=======
     setIsDeleteCardPopupOpen(false);
     setSelectedCard({});
     setCardForDelete({});
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     function handleEscapeClick(evt) {
       if (evt.key === "Escape") {
         closeAllPopups();
@@ -347,7 +207,6 @@ function App() {
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </CurrentUserContext.Provider>
->>>>>>> develop_11
     </div>
   );
 }
