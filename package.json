@@ -19,10 +19,16 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DenisShamanskiy/mesto-react.git"
+  },
   "author": "Denis Shamanskiy",
   "license": "ISC",
- 
+  "bugs": {
+    "url": "https://github.com/DenisShamanskiy/mesto-react/issues"
+  },
+  "homepage": "https://DenisShamanskiy.github.io/mesto-react/",
   "eslintConfig": {
     "extends": [
       "react-app",

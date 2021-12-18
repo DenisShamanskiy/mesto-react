@@ -1,5 +1,11 @@
-# Mesto на React
+# Место (Mesto) на React
 
-Данный проект представляет собой одностраничный сайт написанный с помощью React
+![Скриншот](mesto.png)
 
-- Страница сайта расположена по адресу: https://denisshamanskiy.github.io/mesto-react/
+## Описание проекта:
+
+Учебный проект в Яндекс.Практикум
+
+Проект [Mesto](https://github.com/DenisShamanskiy/mesto) портирован на `React `
+
+Размещён на [GitHub Pages](https://denisshamanskiy.github.io/mesto-react/ "Mesto на React")
